@@ -4,7 +4,7 @@ import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
-import PopupWithImage from "./PopupWithImage.js";
+import ImagePopup from "./ImagePopup.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -149,7 +149,7 @@ function App() {
         buttonValue="Sí"
         onClose={closeAllPopups}
       ></PopupWithForm>
-      <PopupWithImage
+      <ImagePopup
         isOpen={isImagePopupOpen}
         link={selectedCard.link}
         name={selectedCard.name}
