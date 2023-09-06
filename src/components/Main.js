@@ -1,4 +1,40 @@
+import React from "react";
+import api from "../utils/api";
+import Card from "./Card.js";
+
 function Main(props) {
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
+
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    api
+      .getUserInfo()
+      .then((res) => {
+        setUserName(res.name);
+        setUserDescription(res.about);
+        setUserAvatar(res.avatar);
+      })
+      .catch((err) => console.log(err));
+  });
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((res) => {
+        setCards(
+          res.map((card) => ({
+            link: card.link,
+            title: card.name,
+            likes: card.likes,
+          }))
+        );
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <main className="content">
       <div className="profile">
@@ -11,12 +47,12 @@ function Main(props) {
             <img
               className="profile__picture"
               alt="Foto del perfil"
-              src="/images/jacques_cousteau.jpg"
+              src={userAvatar}
             />
           </div>
           <div className="profile__info">
             <div className="profile__wrapper">
-              <h1 className="profile__name">Cousteau</h1>
+              <h1 className="profile__name">{userName}</h1>
               <button
                 className="profile__edit-button"
                 onClick={props.onEditProfileClick}
@@ -27,7 +63,7 @@ function Main(props) {
                 />
               </button>
             </div>
-            <h2 className="profile__job">Explorador</h2>
+            <h2 className="profile__job">{userDescription}</h2>
           </div>
         </div>
         <button className="profile__add-button" onClick={props.onAddPlaceClick}>
@@ -35,7 +71,17 @@ function Main(props) {
         </button>
       </div>
       <div className="elements">
-        <ul className="elements__container"></ul>
+        <ul className="elements__container">
+          {cards.map((card, index) => (
+            <Card
+              key={index}
+              link={card.link}
+              title={card.title}
+              likes={card.likes.length}
+              onCardClick={() => props.onCardClick(card)}
+            />
+          ))}
+        </ul>
       </div>
     </main>
   );
