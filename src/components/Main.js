@@ -1,6 +1,8 @@
 import React from "react";
 import api from "../utils/api";
 import Card from "./Card.js";
+import EditButton from "../images/edit-button.svg";
+import AddButton from "../images/add-button.svg";
 
 function Main(props) {
   const [userName, setUserName] = React.useState("");
@@ -18,7 +20,7 @@ function Main(props) {
         setUserAvatar(res.avatar);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   React.useEffect(() => {
     api
@@ -27,7 +29,7 @@ function Main(props) {
         setCards(
           res.map((card) => ({
             link: card.link,
-            title: card.name,
+            name: card.name,
             likes: card.likes,
           }))
         );
@@ -57,17 +59,14 @@ function Main(props) {
                 className="profile__edit-button"
                 onClick={props.onEditProfileClick}
               >
-                <img
-                  src="/images/edit-button.svg"
-                  alt="Logo de botón de editar"
-                />
+                <img src={EditButton} alt="Logo de botón de editar" />
               </button>
             </div>
             <h2 className="profile__job">{userDescription}</h2>
           </div>
         </div>
         <button className="profile__add-button" onClick={props.onAddPlaceClick}>
-          <img src="/images/add-button.svg" alt="Logo de botón de eliminar" />
+          <img src={AddButton} alt="Logo de botón de eliminar" />
         </button>
       </div>
       <div className="elements">
@@ -76,7 +75,7 @@ function Main(props) {
             <Card
               key={index}
               link={card.link}
-              title={card.title}
+              name={card.name}
               likes={card.likes.length}
               onCardClick={() => props.onCardClick(card)}
             />

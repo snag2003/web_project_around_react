@@ -1,3 +1,5 @@
+import closeButton from "../images/close-button.svg";
+
 function ImagePopup(props) {
   return (
     <div
@@ -9,7 +11,7 @@ function ImagePopup(props) {
       <div className="popup__open-image">
         <button className="popup__close-button">
           <img
-            src="./images/close-button.svg"
+            src={closeButton}
             alt="Logo de botón de cerrar"
             onClick={props.onClose}
           />

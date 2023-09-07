@@ -1,3 +1,5 @@
+import closeButton from "../images/close-button.svg";
+
 function PopupWithForm(props) {
   return (
     <div
@@ -12,7 +14,7 @@ function PopupWithForm(props) {
           className="popup__close-button"
           onClick={props.onClose}
         >
-          <img src="./images/close-button.svg" alt="Logo de botón de cerrar" />
+          <img src={closeButton} alt="Logo de botón de cerrar" />
         </button>
         <h2 className="popup__title">{props.title}</h2>
         <fieldset className="popup__fields">

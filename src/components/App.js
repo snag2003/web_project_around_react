@@ -14,7 +14,7 @@ function App() {
     React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     link: "",
-    name: "",
+    title: "",
   });
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
 
