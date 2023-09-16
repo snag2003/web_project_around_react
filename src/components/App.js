@@ -22,8 +22,6 @@ function App() {
 
   const [currentUser, setCurrentUser] = React.useState({});
 
-  const [cards, setCards] = React.useState([]);
-
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
   }
@@ -53,29 +51,11 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(
-          res.map((card) => ({
-            link: card.link,
-            name: card.name,
-            likes: card.likes,
-            _id: card._id,
-            owner: card.owner,
-          }))
-        );
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
         <Main
-          cards={cards}
           onEditProfileClick={handleEditProfileClick}
           onAddPlaceClick={handleAddPlaceClick}
           onEditAvatarClick={handleEditAvatarClick}

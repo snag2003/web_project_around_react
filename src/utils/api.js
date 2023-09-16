@@ -69,6 +69,13 @@ class Api {
   cardUnliked(cardId) {
     return this._handleRequest(`/cards/likes/${cardId}`, "DELETE");
   }
+
+  changeLikeCardStatus(cardId, isLiked) {
+    return this._handleRequest(
+      `/cards/likes/${cardId}`,
+      isLiked ? "PUT" : "DELETE"
+    );
+  }
 }
 
 const api = new Api({
