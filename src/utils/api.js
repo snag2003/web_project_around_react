@@ -37,7 +37,7 @@ class Api {
   editUserInfo(data) {
     return this._handleRequest("/users/me", "PATCH", {
       name: data.name,
-      about: data.job,
+      about: data.about,
     });
   }
 

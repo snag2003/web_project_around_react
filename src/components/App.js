@@ -4,6 +4,7 @@ import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
+import EditProfilePopup from "./EditProfilePopup.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
@@ -35,11 +36,21 @@ function App() {
     setSelectedCard({ link: card.link, name: card.name });
     setIsImagePopupOpen(true);
   }
-  function closeAllPopups() {
+  function closeAllPopups(evt) {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
+  }
+
+  function handleUpdateUser({ name, about }) {
+    api
+      .editUserInfo({ name, about })
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.log(err));
+    closeAllPopups();
   }
 
   React.useEffect(() => {
@@ -62,44 +73,11 @@ function App() {
           onCardClick={(card) => handleCardClick(card)}
         />
         <Footer />
-        <PopupWithForm
-          name="edit"
-          title="Editar perfil"
-          buttonValue="Guardar"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className="popup__field">
-            <input
-              type="text"
-              id="name-input"
-              className="popup__input"
-              name="name"
-              placeholder="Nombre"
-              minLength="2"
-              maxLength="40"
-              required
-            />
-            <span className="popup__input-error name-input-error">
-              Por favor, rellena este campo.
-            </span>
-          </label>
-          <label className="popup__field">
-            <input
-              type="text"
-              id="category-input"
-              className="popup__input"
-              name="about"
-              placeholder="Acerca de mí"
-              minLength="2"
-              maxLength="400"
-              required
-            />
-            <span className="popup__input-error category-input-error">
-              Por favor, rellena este campo.
-            </span>
-          </label>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
         <PopupWithForm
           name="add"
           title="Nuevo Lugar"
