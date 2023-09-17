@@ -43,7 +43,7 @@ class Api {
 
   editAvatar(avatar) {
     return this._handleRequest("/users/me/avatar", "PATCH", {
-      avatar: avatar.link,
+      avatar: avatar,
     });
   }
 

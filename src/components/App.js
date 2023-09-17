@@ -5,6 +5,7 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import EditProfilePopup from "./EditProfilePopup.js";
+import EditAvatarPopup from "./EditAvatarPopup.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
@@ -46,6 +47,16 @@ function App() {
   function handleUpdateUser({ name, about }) {
     api
       .editUserInfo({ name, about })
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.log(err));
+    closeAllPopups();
+  }
+
+  function handleUpdateAvatar(avatarInput) {
+    api
+      .editAvatar(avatarInput.avatar)
       .then((res) => {
         setCurrentUser(res);
       })
@@ -114,27 +125,11 @@ function App() {
             </span>
           </label>
         </PopupWithForm>
-        <PopupWithForm
-          name="avatar"
-          title="Cambiar foto de perfil"
-          buttonValue="Crear"
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className="popup__field">
-            <input
-              type="url"
-              id="url-input-avatar"
-              className="popup__input"
-              name="link"
-              placeholder="Enlace a la imagen"
-              required
-            />
-            <span className="popup__input-error url-input-error">
-              Por favor, introduce una dirección web.
-            </span>
-          </label>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
         <PopupWithForm
           name="delete"
           title="¿Estás seguro?"
