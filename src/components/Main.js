@@ -3,7 +3,6 @@ import Card from "./Card.js";
 import EditButton from "../images/edit-button.svg";
 import AddButton from "../images/add-button.svg";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-import api from "../utils/api.js";
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);

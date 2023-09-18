@@ -4,6 +4,7 @@ import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
+import AddPlacePopup from "./AddPlacePopup.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import ImagePopup from "./ImagePopup.js";
@@ -82,6 +83,20 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleAddPlaceSubmit({ name, link }) {
+    // Call the API to add a new card
+    api
+      .postNewCard({ name, link })
+      .then((newCard) => {
+        setCards([newCard, ...cards]); // Update the state with the new card
+        setIsAddPlacePopupOpen(false); // Close the AddPlacePopup
+      })
+      .catch((error) => {
+        console.error("Error adding a new card:", error);
+        // Add error handling here if needed
+      });
+  }
+
   React.useEffect(() => {
     api
       .getInitialCards()
@@ -127,42 +142,11 @@ function App() {
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-        <PopupWithForm
-          name="add"
-          title="Nuevo Lugar"
-          buttonValue="Crear"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className="popup__field">
-            <input
-              type="text"
-              id="title-input"
-              className="popup__input"
-              name="name"
-              placeholder="Título"
-              minLength="2"
-              maxLength="30"
-              required
-            />
-            <span className="popup__input-error title-input-error">
-              Por favor, rellena este campo.
-            </span>
-          </label>
-          <label className="popup__field">
-            <input
-              type="url"
-              id="url-input"
-              className="popup__input"
-              name="link"
-              placeholder="Enlace a la imagen"
-              required
-            />
-            <span className="popup__input-error url-input-error">
-              Por favor, introduce una dirección web.
-            </span>
-          </label>
-        </PopupWithForm>
+          onAddPlaceSubmit={handleAddPlaceSubmit}
+        />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
