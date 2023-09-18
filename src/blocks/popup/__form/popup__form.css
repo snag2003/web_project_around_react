@@ -6,7 +6,7 @@
   padding: 24px 36px 36px;
   position: fixed;
   top: 50%;
-  left: 45%;
+  left: 40%;
   margin: 32px 36px 36px;
   z-index: 2;
   transform: translate(-50%, -50%);
@@ -20,6 +20,6 @@
 
 @media screen and (max-width: 500px) {
   .popup__form {
-    width: 280px;
+    width: 250px;
   }
 }
